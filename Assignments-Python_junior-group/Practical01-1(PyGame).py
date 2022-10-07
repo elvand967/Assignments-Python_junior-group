@@ -11,7 +11,7 @@ W = 500  # ширина экрана
 H = 500  # высота экрана
 WHITE = (255, 255, 255)
 BLUE = (0, 70, 225)
-
+n = 3 # шаг смещения
 sc = pygame.display.set_mode((W, H))
 clock = pygame.time.Clock()
 
@@ -30,25 +30,41 @@ while True:
                          pygame.K_RIGHT,
                          pygame.K_UP,
                          pygame.K_DOWN]:
-                x = X
-                y = Y
+                while x != X and y !=Y:
+                    if x != X:
+                        if x > X:
+                            x -= n
+                        else: x += n
 
-    sc.fill(WHITE)
-    pygame.draw.circle(sc, BLUE, (x, y), r)
-    pygame.display.update()
+                    if y != Y:
+                        if y > Y:
+                            y -= n
+                        else: y += n
 
-    keys = pygame.key.get_pressed()
+                    sc.fill(WHITE)  # "удаляем следы" - очищаем виджет, задаем цвет фона
+                    pygame.draw.circle(sc, BLUE, (x, y), r)  # создаем новую фигуру (шар)
+                    pygame.display.update()  # Функции update() и flip() модуля display обновляют содержимое окна игры.
+                    # Это значит, что каждому пикселю заново устанавливается цвет.
+                    clock.tick(FPS-20)
+
+    sc.fill(WHITE) # "удаляем следы" - очищаем виджет, задаем цвет фона
+    pygame.draw.circle(sc, BLUE, (x, y), r) # создаем новую фигуру (шар)
+    pygame.display.update() # Функции update() и flip() модуля display обновляют содержимое окна игры.
+    # Это значит, что каждому пикселю заново устанавливается цвет.
+
+    keys = pygame.key.get_pressed() # нажатие и удержание клавиши
 
     if keys[pygame.K_LEFT]:
-        x -= 3
+        x -= n
     elif keys[pygame.K_RIGHT]:
-        x += 3
+        x += n
 
     elif keys[pygame.K_UP]:
-        y -= 3
+        y -= n
 
     elif keys[pygame.K_DOWN]:
-        y += 3
+        y += n
+
 
     # Ограничение количества кадров в секунду, благодаря чему становится
     clock.tick(FPS) # проще просчитывать анимации и синхронизировать события
