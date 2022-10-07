@@ -20,6 +20,14 @@ X = x = W // 2 # X - исходные  x - фактические
 Y = y = H // 2
 r = 20
 
+def up_circle():
+    sc.fill(WHITE)  # "удаляем следы" - очищаем виджет, задаем цвет фона
+    pygame.draw.circle(sc, BLUE, (x, y), r)  # создаем новую фигуру (шар)
+    pygame.display.update()  # Функции update() и flip() модуля display обновляют содержимое окна игры.
+    # Это значит, что каждому пикселю заново устанавливается цвет.
+    # Ограничение количества кадров в секунду, благодаря чему становится
+    clock.tick(FPS) # проще просчитывать анимации и синхронизировать события
+
 while True:
     for i in pygame.event.get():
         if i.type == pygame.QUIT:
@@ -30,27 +38,20 @@ while True:
                          pygame.K_RIGHT,
                          pygame.K_UP,
                          pygame.K_DOWN]:
-                while x != X and y !=Y:
+                while x != X or y !=Y:
                     if x != X:
                         if x > X:
                             x -= n
-                        else: x += n
+                        else:
+                            x += n
 
                     if y != Y:
                         if y > Y:
                             y -= n
-                        else: y += n
+                        else:
+                            y += n
 
-                    sc.fill(WHITE)  # "удаляем следы" - очищаем виджет, задаем цвет фона
-                    pygame.draw.circle(sc, BLUE, (x, y), r)  # создаем новую фигуру (шар)
-                    pygame.display.update()  # Функции update() и flip() модуля display обновляют содержимое окна игры.
-                    # Это значит, что каждому пикселю заново устанавливается цвет.
-                    clock.tick(FPS-20)
-
-    sc.fill(WHITE) # "удаляем следы" - очищаем виджет, задаем цвет фона
-    pygame.draw.circle(sc, BLUE, (x, y), r) # создаем новую фигуру (шар)
-    pygame.display.update() # Функции update() и flip() модуля display обновляют содержимое окна игры.
-    # Это значит, что каждому пикселю заново устанавливается цвет.
+                    up_circle()# Функция up_circle() обновляет содержимое окна игры при возрате шара.
 
     keys = pygame.key.get_pressed() # нажатие и удержание клавиши
 
@@ -65,6 +66,5 @@ while True:
     elif keys[pygame.K_DOWN]:
         y += n
 
+    up_circle()  # Функция up_circle() обновляет содержимое окна игры + обеспечивает .
 
-    # Ограничение количества кадров в секунду, благодаря чему становится
-    clock.tick(FPS) # проще просчитывать анимации и синхронизировать события
