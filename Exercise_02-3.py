@@ -8,12 +8,22 @@ import pygame
 
 pygame.init()
 
+
+FPS = 60
+W = 500  # ширина экрана
+H = 500  # высота экрана
 WHITE = (255, 255, 255)
+BLUE = (0, 0, 255)
+# определяем середину экрана виджета
+X = x = W // 2 # X - исходные  x - фактические
+Y = y = H // 2
+xy = (x, y)# координаты верхнего-левого угла квадрата - ???
+l = 20     # ширина прямоугольника (квадрата)
+h = 20     # высота прямоугольника (квадрата)
 
-screen = pygame.display.set_mode((600, 600))
-rect = pygame.Rect(50, 50, 20, 20)
+screen = pygame.display.set_mode((W, H))
+rect = pygame.Rect(x, y, l, h)
 
-fl_start = False
 
 while True:
     for event in pygame.event.get():
@@ -23,15 +33,15 @@ while True:
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                rect.move_ip(-20, 0)
+                rect.move_ip(-l, 0)
             elif event.key == pygame.K_RIGHT:
-                rect.move_ip(20, 0)
+                rect.move_ip(l, 0)
             elif event.key == pygame.K_UP:
-                rect.move_ip(0, -20)
+                rect.move_ip(0, -h)
             elif event.key == pygame.K_DOWN:
-                rect.move_ip(0, 20)
+                rect.move_ip(0, h)
 
     screen.fill(WHITE)
-    pygame.draw.rect(screen, (0, 0, 255), rect, 0)
+    pygame.draw.rect(screen, BLUE, rect, 0)
 
     pygame.display.flip()
